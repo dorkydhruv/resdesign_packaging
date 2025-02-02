@@ -9,8 +9,7 @@ import { ProductInfoSection } from "./form/ProductInfoSection";
 import { PackageDetailsSection } from "./form/PackageDetailsSection";
 import { ThemeColorSection } from "./form/ThemeColorSection";
 import { VariationsSection } from "./form/VariationsSection";
-import { Input } from "./ui/input";
-
+import axios from "axios";
 type FormData = {
   brandName: string;
   productName: string;
@@ -24,16 +23,24 @@ type FormData = {
   variations: string;
 };
 
-export default function DashBoardForm() {
+type DashBoardFormProps = {
+  onStartGenerating: (state: boolean) => void;
+  onImagesGenerated: (imgs: { imageURL: string }[]) => void;
+};
+
+export default function DashBoardForm({
+  onStartGenerating,
+  onImagesGenerated,
+}: DashBoardFormProps) {
   const [formData, setFormData] = useState<FormData>({
     brandName: "",
     productName: "",
     productSubtitle: "",
     productDescription: "",
-    packageType: "",
-    productStyle: "",
-    theme: "",
-    color: "",
+    packageType: "box",
+    productStyle: "minimal",
+    theme: "rich",
+    color: "#c7b4b2",
     illustrationDescription: "",
     variations: "1N",
   });
@@ -62,7 +69,8 @@ export default function DashBoardForm() {
 
       <ThemeColorSection
         theme={formData.theme}
-        onChange={(value) => handleFormChange("theme", value)}
+        color={formData.color}
+        onChange={(field, value) => handleFormChange(field, value)}
       />
 
       <div className='flex flex-col gap-2'>
@@ -85,7 +93,13 @@ export default function DashBoardForm() {
 
       <Button
         className='bg-buttoncolor'
-        onClick={() => console.log("Submitted:", formData)}
+        onClick={async () => {
+          onStartGenerating(true);
+          const response = await axios.post("/api/generate", formData);
+          // Assume response.data is the array of image objects
+          onImagesGenerated(response.data.slice(0, 4));
+          onStartGenerating(false);
+        }}
       >
         <div className='flex items-center gap-2 text-white'>
           <Sparkle className='w-4 h-4' />

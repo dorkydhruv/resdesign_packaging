@@ -25,6 +25,7 @@ export function PackageDetailsSection({
         <Label className='text-sm'>Package Type</Label>
         <Select
           value={packageType}
+          defaultValue={packageType}
           onValueChange={(value) => onChange("packageType", value)}
         >
           <SelectTrigger>
@@ -32,12 +33,12 @@ export function PackageDetailsSection({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value='manual'>Standup Bag</SelectItem>
-              <SelectItem value='theme'>Tote Bag</SelectItem>
-              <SelectItem value='color'>Glass Bottle</SelectItem>
-              <SelectItem value='monotone'>Glass Jar</SelectItem>
+              <SelectItem value='standup-bag'>Standup Bag</SelectItem>
+              <SelectItem value='tote-bag'>Tote Bag</SelectItem>
+              <SelectItem value='glass-bottle'>Glass Bottle</SelectItem>
+              <SelectItem value='glass-jar'>Glass Jar</SelectItem>
               <SelectItem value='box'>Box</SelectItem>
-              <SelectItem value='packer'>Packet</SelectItem>
+              <SelectItem value='packet'>Packet</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -46,6 +47,7 @@ export function PackageDetailsSection({
         <Label className='text-sm'>Style</Label>
         <Select
           value={productStyle}
+          defaultValue={productStyle}
           onValueChange={(value) => onChange("productStyle", value)}
         >
           <SelectTrigger>
@@ -53,8 +55,8 @@ export function PackageDetailsSection({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value='pink-light'>Minimal</SelectItem>
-              <SelectItem value='select'>Bold and Colorful</SelectItem>
+              <SelectItem value='minimal'>Minimal</SelectItem>
+              <SelectItem value='bold-and-colorful'>Bold and Colorful</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

@@ -7,34 +7,54 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
+import { Button } from "../ui/button";
 
 type ThemeColorProps = {
   theme: string;
-  onChange: (value: string) => void;
+  color: string;
+  onChange: (field: "theme" | "color", value: string) => void;
 };
 
-export function ThemeColorSection({ theme, onChange }: ThemeColorProps) {
+export function ThemeColorSection({ theme, color, onChange }: ThemeColorProps) {
   return (
     <div className='flex flex-row gap-2'>
       <div className='flex flex-col gap-1 flex-1'>
         <Label className='text-sm'>Theme</Label>
-        <Select value={theme} onValueChange={onChange}>
+        <Select
+          value={theme}
+          onValueChange={(value) => onChange("theme", value)}
+        >
           <SelectTrigger>
             <SelectValue placeholder='Select Theme' />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value='manual'>Monotone</SelectItem>
-              <SelectItem value='theme'>Vibrant</SelectItem>
-              <SelectItem value='color'>Subtle</SelectItem>
-              <SelectItem value='monotone'>Rich</SelectItem>
+              <SelectItem value='monotone'>Monotone</SelectItem>
+              <SelectItem value='vibrant'>Vibrant</SelectItem>
+              <SelectItem value='subtle'>Subtle</SelectItem>
+              <SelectItem value='rich'>Rich</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
       </div>
       <div className='flex flex-col gap-1 flex-1'>
         <Label className='text-sm'>Color</Label>
-        {/* Insert ColorPicker component if available */}
+        <input
+          className='w-full h-full rounded-md'
+          type='color'
+          enterKeyHint='done'
+          value={color}
+          onChange={(e) => onChange("color", e.target.value)}
+        />
       </div>
     </div>
   );
